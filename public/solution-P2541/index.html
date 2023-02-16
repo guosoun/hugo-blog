@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.104.3" /><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>P2541 [USACO16DEC]Robotic Cow Herd P 题解 | GZY的博客</title>
+
+    <link rel="stylesheet" href="/css/meme.min.010b70788dbccb1074d86c2bcca67e91e00b85977d8c36fad4db264c0177387a.css"/>
+
+    
+    
+        <script src="/js/meme.min.fe253b2983f4d6110ea9b2a3a1aa805ef1ba1e642080fece6717eded7479b51f.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="guoziyang" /><meta name="description" content="0x00 题意 给你 $N$ 序列，第 $i$ 个的长度为 $M_i$，要求在每个序列中选择一个数，每种选法的代价为选择的 $N$ 个数……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="GZY的博客" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="GZY的博客" />
+    <meta name="msapplication-starturl" content="../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="https://gzy-blog.pages.dev/solution-P2541/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2022-10-20T13:52:23+08:00",
+        "dateModified": "2023-02-14T18:22:31+08:00",
+        "url": "https://gzy-blog.pages.dev/solution-P2541/",
+        "headline": "P2541 [USACO16DEC]Robotic Cow Herd P 题解",
+        "description": "0x00 题意 给你 $N$ 序列，第 $i$ 个的长度为 $M_i$，要求在每个序列中选择一个数，每种选法的代价为选择的 $N$ 个数……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  2326 ,
+        "image": ["https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3niyrqj30ii0beglp.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3rly72j30ig0bc3yl.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3vcad1j30ii0bgjrh.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3y33v3j30i60bmwel.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul40hr9rj30i60bmwel.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul42vvk6j30ii0beglp.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4483vgj30ia0baaa2.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4cns4lj30i20b6jrf.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4jo4atj30ia0eqglq.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4l3urpj30i60eoq33.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4mjin1j30i40eg0sv.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4p8qk8j30i80eajrk.jpg","https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4s5pmpj30fk0dcmxc.jpg"],
+        "author": {
+            "@type": "Person",
+            "description": "这指尖所敲打的，正是通向真理的道路。",
+            "email": "2236998782@qq.com",
+            "url": "https://gzy-blog.pages.dev/",
+            "name": "guoziyang"
+        },
+        "license": "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)",
+        "publisher": {
+            "@type": "Organization",
+            "name": "GZY的博客",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://gzy-blog.pages.dev/icons/logo.png"
+            },
+            "url": "https://gzy-blog.pages.dev/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://gzy-blog.pages.dev/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+    
+
+
+
+<meta property="og:title" content="P2541 [USACO16DEC]Robotic Cow Herd P 题解" />
+<meta property="og:description" content="0x00 题意 给你 $N$ 序列，第 $i$ 个的长度为 $M_i$，要求在每个序列中选择一个数，每种选法的代价为选择的 $N$ 个数……" />
+<meta property="og:url" content="https://gzy-blog.pages.dev/solution-P2541/" />
+<meta property="og:site_name" content="GZY的博客" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3niyrqj30ii0beglp.jpg" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2022-10-20T13:52:23&#43;08:00" />
+    <meta property="article:modified_time" content="2023-02-14T18:22:31&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+
+    
+    
+
+    
+
+    <meta name="referer" content="never" />
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">GZY的博客</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon home"><path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"/></svg><span class="menu-item-name">首页</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item active"><a href="/posts/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon archive"><path d="M32 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V160H32v288zm160-212c0-6.6 5.4-12 12-12h104c6.6 0 12 5.4 12 12v8c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-8zM480 32H32C14.3 32 0 46.3 0 64v48c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16V64c0-17.7-14.3-32-32-32z"/></svg><span class="menu-item-name">文章</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/categories/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon th"><path d="M149.333 56v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zm181.334 240v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm32-240v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24zm-32 80V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm-205.334 56H24c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm386.667-56H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm0 160H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zM181.333 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24z"/></svg><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon tags"><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5l48.8-97.5a18 18 0 0128 0l48.8 97.5 103.4 -34.5a18 18 0 0119.8 19.8l-34.5 103.4l97.5 48.8a18 18 0 010 28l-97.5 48.8 34.5 103.4a18 18 0 01-19.8 19.8l-103.4-34.5-48.8 97.5a18 18 0 01-28 0l-48.8-97.5l-103.4 34.5a18 18 0 01-19.8-19.8l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8-34.5-103.4a18 18 0 0119.8-19.8zM256 128a128 128 0 10.01 0M256 160a96 96 0 10.01 0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412a256 256 0 10154-407a11.5 11.5 0 00-5 20a201.5 201.5 0 01-134 374a11.5 11.5 0 00-15 13"/></svg></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">P2541 [USACO16DEC]Robotic Cow Herd P 题解</h1>
+
+            
+
+            
+                
+            
+
+            
+                
+
+<div class="post-meta">
+    
+        
+        <time datetime="2022-10-20T13:52:23&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2022.10.20</time>
+    
+    
+        
+        <time datetime="2023-02-14T18:22:31&#43;08:00" class="post-meta-item modified dt-updated"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"/></svg>&nbsp;2023.2.14</time>
+    
+    
+    
+        
+        
+        
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-link p-category">题解</a></span>
+            
+        
+    
+    
+        
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2326</span>
+    
+    
+    
+        
+            
+            <span class="post-meta-item busuanzi-page-pv" id="busuanzi_container_page_pv"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon post-meta-icon"><path d="M288 144a110.94 110.94 0 0 0-31.24 5 55.4 55.4 0 0 1 7.24 27 56 56 0 0 1-56 56 55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144zm284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400z"/></svg>&nbsp;<span id="busuanzi_value_page_pv"></span></span>
+        
+    
+    
+</div>
+
+            
+
+            <div class="post-body e-content">
+                <h2 id="0x00-题意"><a href="#0x00-题意" class="anchor-link">§</a>0x00 题意</h2>
+<p>给你 $N$ 序列，第 $i$ 个的长度为 $M_i$，要求在每个序列中选择一个数，每种选法的代价为选择的 $N$ 个数之和，请求出代价前 $K$ 小的方案。</p>
+<p>$N,K\leq10^5,M_i\leq10$</p>
+<h2 id="0x01-暴力"><a href="#0x01-暴力" class="anchor-link">§</a>0x01 暴力</h2>
+<p>容易得出两个结论：</p>
+<ul>
+<li>
+<p>每个序列要从小到大选；</p>
+</li>
+<li>
+<p>最小解为每个序列最小值之和。</p>
+</li>
+</ul>
+<p>于是就有了一个及其暴力的写法：</p>
+<p>首先将所有序列从小到大排序，然后维护小根堆。</p>
+<p>一开始将最小解（也就是所有序列选第一个数）入堆，</p>
+<p>之后 $K$ 次出当前堆中最小的数，考虑将这个状态扩展，</p>
+<p>对于这个状态将他的后继状态入堆，也就是从 $1$ 到 $N$ 枚举哪一行往后多选一个，将这 $N$ 后继种状态入堆。</p>
+<p>这个算法的正确性很容易保证，问题是效率太低，每次扩展都要枚举 $N$ 种情况。</p>
+<p>时间复杂度 $O(nk)$；</p>
+<p>空间复杂度 $O(nk)$，因为堆中需要有至少 $N$ 个状态，每个状态需要记录 $N$ 行的情况。</p>
+<h2 id="0x02-优化1"><a href="#0x02-优化1" class="anchor-link">§</a>0x02 优化1</h2>
+<p>考虑优化上述暴力。</p>
+<p>为了方便，接下来我要用图片来表示每一种状态：</p>
+<img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3niyrqj30ii0beglp.jpg" alt="image-20221004192622379" style="zoom:33%;" />
+<p>这个图片为 $N=3,M_i=5$ 的情况 ，</p>
+<p>左侧一列灰色格子，表示每个序列的最小值，</p>
+<p>每行加重的颜色，代表着这个序列选的数，上图代表着第一行选了第 $4$ 小的数，第二行选了第 $3$ 小的数，第三行第 $5$ 小。</p>
+<p>回到我们的暴力，我们发现，每个状态会被不止一个前驱状态入堆。</p>
+<p>下面这三个货均会让上面的入堆。</p>
+<p><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3rly72j30ig0bc3yl.jpg" alt="image-20221004192912777" style="zoom:30%;" /><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3vcad1j30ii0bgjrh.jpg" alt="image-20221004193008280" style="zoom:30%;" /><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul3y33v3j30i60bmwel.jpg" alt="image-20221004193209101" style="zoom:30%;" /></p>
+<p>但是，<strong>只要任意一个前驱状态入堆，就可以保证这个情况被考虑。</strong></p>
+<p><strong>减少每个状态的前驱状态，是我们优化的核心。</strong></p>
+<p>现在，我们规定，每个状态的前驱状态，就是这个状态的最后一行选择前一个数的状态（这个数一定比当前的小）。</p>
+<p>特殊的，如果最后一行已经选了最小的无法再小，那就从下往上选择第一个可以更小的行（这行选的数一定是第二个或者更往后）。</p>
+<p>举例（上面是下面的前驱状态）：</p>
+<p><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul40hr9rj30i60bmwel.jpg" alt="image-20221004193209101" style="zoom:33%;" /><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul42vvk6j30ii0beglp.jpg" alt="image-20221004192622379" style="zoom:33%;" /></p>
+<hr>
+<p><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4483vgj30ia0baaa2.jpg" alt="image-20221004201950930" style="zoom:33%;" /><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4cns4lj30i20b6jrf.jpg" alt="image-20221004201926884" style="zoom:33%;" /></p>
+<p>注意到，每个状态的前驱状态的代价都比自己小，这就代表着每个状态都打好提前量，在合适的时候入堆，不会出现错误。</p>
+<p>到目前，我们已经保证每个状态都用唯一的前驱状态，那么，是不是每个状态都有一个后继状态呢？</p>
+<p>我们考虑下面这个状态的后继状态，相当于考虑哪些状态会将下面这个状态称为前驱状态。</p>
+<img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4jo4atj30ia0eqglq.jpg" alt="image-20221004195423303" style="zoom:33%;" />
+<p>首先，是将最后一行（蓝色行）往后选一个的情况，这种情况的前驱一定当前状态。</p>
+<img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4l3urpj30i60eoq33.jpg" alt="image-20221004195955402" style="zoom:33%;" />
+<p>但是假设蓝色行后面有一行选了第二个数，那么变为最小值之后，其前驱也是当前状态，下面这两种也是其后继。</p>
+<p><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4mjin1j30i40eg0sv.jpg" alt="image-20221004202348848" style="zoom:33%;" /><img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4p8qk8j30i80eajrk.jpg" alt="image-20221004202427283" style="zoom:33%;" /></p>
+<p>那到这就有点难办了，一个状态最多有 $N$ 个后继，这不和没优化一样嘛！</p>
+<h2 id="0x03-优化2"><a href="#0x03-优化2" class="anchor-link">§</a>0x03 优化2</h2>
+<p>我们的困难是，一个状态可能有若干个后继状态，但我们发现，这若干个状态有一个共同点。</p>
+<p>除了那个将最后一行再选一个的一般情况，剩下的后继状态，都是要将下面一个选最小的行选第 $2$ 个。</p>
+<p>我们考虑，这些状态一定需要同时入堆吗，这些状态有没有所谓的前驱、后继关系呢？</p>
+<p>我们要知道，前驱后继的关键所在，就是某个值一定比另一个值小，只有这样，后继才能在前驱后入堆。</p>
+<p>那么，我们要增加的第二列，有一个大小关系吗？</p>
+<p>我们将后两行的前两个标上数试试。</p>
+<img src="https://image.baidu.com/search/down?url=https://tvax1.sinaimg.cn/large/006y8mN6gy1h6ul4s5pmpj30fk0dcmxc.jpg" alt="image-20221004204650348" style="zoom:33%;" />
+<p>那么我们两个后继中，将第 $3$ 行选第 $2$ 个增加的代价为 $4-2$，将第 $4$ 行选第 $2$ 个增加的代价为 $5-4$，显然后者更小。</p>
+<p>那么，我们：</p>
+<ul>
+<li>
+<p>将「第 $3$ 行选第 $2$ 个，第 $4$ 行选第 $1$ 个」设为「第 $3$ 行选第 $1$ 个，第 $4$ 行选第 $2$ 个」的后继；</p>
+</li>
+<li>
+<p>将「第 $4$ 行选第 $2$ 个」设为「当前状态」的后继。</p>
+</li>
+</ul>
+<p>但我们发现这样的顺序很难维护，所以我们先将所有行的 $f_{i,2}-f_{i,1}$ 从小到大排序。</p>
+<p>这样，我们每个状态的后继都可以很清楚的表达出来了：</p>
+<ul>
+<li>当前行，选择下一个；</li>
+<li>下一行，选择第二个；</li>
+<li>如果当前行正在选第二个，则还可以变为「当前行选择第一个，下一行选择第二个」。</li>
+</ul>
+<p>这样，每个状态只有 $3$ 个后继了，时间复杂度为 $O(k\times\log{n})$，可以接受.</p>
+<p>但是如果每个状态都把每一行选到第几列记录的话，空间复杂度 $O(n^2)$ 就难以接受了。</p>
+<p>但考虑到，如果现在最后一行为 $i$ 的话，后继状态是不会改变 $1$ 至 $i-1$ 行的，所以我们只要记录当前行以及这行选了第几个即可。</p>
+<h2 id="0x03-code"><a href="#0x03-code" class="anchor-link">§</a>0x03 code</h2>
+<p>一些小提示：</p>
+<ul>
+<li>状态不能用 set 去重~~（画蛇添足~~，因为理论上已经不可能重复加入，由于状态只记录了最后一行选的数，不保证前面行所取的完全一样，去重会少情况；</li>
+<li>用查分更好实现，但在这里方便理解我没用，读者可以自行尝试；</li>
+<li>需要 long long；</li>
+</ul>
+<p>代码：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define ll long long
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">N</span><span class="o">=</span><span class="mf">1e5</span><span class="o">+</span><span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">m</span><span class="p">[</span><span class="n">N</span><span class="p">];</span><span class="n">ll</span> <span class="n">ans</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="mi">20</span><span class="o">&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">N</span><span class="p">];</span><span class="c1">//stl封装的定长数组，在这题中用它实现是为了将行的(p[2]-p[1])排序；
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">cmp</span><span class="p">(</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="mi">20</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">,</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="mi">20</span><span class="o">&gt;</span> <span class="n">b</span><span class="p">){</span><span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">];}</span><span class="c1">//比较函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">node</span><span class="p">{</span><span class="n">ll</span> <span class="n">val</span><span class="p">;</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">;};</span><span class="c1">//当前选法代价是val，最后一行是x，选了y列的数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="k">operator</span><span class="o">&lt;</span><span class="p">(</span><span class="n">node</span> <span class="n">x</span><span class="p">,</span><span class="n">node</span> <span class="n">y</span><span class="p">){</span><span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">val</span><span class="o">&gt;</span><span class="n">y</span><span class="p">.</span><span class="n">val</span><span class="p">;}</span><span class="c1">//堆默认是大根对，所以要反着重载。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">node</span><span class="o">&gt;</span><span class="n">q</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">n</span><span class="o">&gt;&gt;</span><span class="n">k</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">fill</span><span class="p">(</span><span class="mf">1e9</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="cm">/*赋最大值*/</span><span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sort</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">()</span><span class="o">+</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="c1">//先对每行排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ans</span><span class="o">+=</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span><span class="c1">//这里ans为最小情况的和
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sort</span><span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="o">+</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">cmp</span><span class="p">);</span><span class="c1">//(p[2]-p[1])的排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">ans</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">});</span><span class="c1">//将x=2,y=1入堆，以后的状态均可通过这个推出来。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">k</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="c1">//最小情况已经在ans里了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="n">q</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">q</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ll</span> <span class="n">val</span><span class="o">=</span><span class="n">q</span><span class="p">.</span><span class="n">top</span><span class="p">().</span><span class="n">val</span><span class="p">;</span><span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span><span class="c1">//取堆顶+弹堆
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ans</span><span class="o">+=</span><span class="n">val</span><span class="p">;</span><span class="c1">//统计答案
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">val</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">});</span><span class="c1">//后继1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="n">n</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span><span class="c1">//这是为了防止越界
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">val</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">});</span><span class="c1">//后继2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">y</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span> <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">val</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">});</span><span class="c1">//后继3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">ans</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table></div>
+</div>
+</div>
+            </div>
+
+            
+
+
+        </article>
+
+        
+
+        
+
+
+        
+
+
+        
+
+
+        
+
+
+        
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>贪心</a>
+                
+            
+        </div>
+    
+
+
+
+        
+
+
+        
+
+
+        
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+                <li class="post-nav-prev">
+                    <a href="/solution-P2481/" rel="prev">&lt; P2481 [SDOI2010]代码拍卖会 题解</a>
+                </li>
+            
+            
+                <li class="post-nav-next">
+                    <a href="/solution-P4102/" rel="next">P4102 [HEOI2014] 林中路径 题解 &gt;</a>
+                </li>
+            
+        </ul>
+    
+
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="site-info">©&nbsp;2022–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;guoziyang</div><div class="custom-footer"><em>这指尖所敲打的，正是通向真理的道路。</em></div>
+                <div class="busuanzi-site-uv-and-pv">
+                    <span id="busuanzi_container_site_uv">本站访客数&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon busuanzi-site-uv"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>&nbsp;<span id="busuanzi_value_site_uv"></span></span>&nbsp;|&nbsp;<span id="busuanzi_container_site_pv">本站访问量&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon busuanzi-site-pv"><path d="M288 144a110.94 110.94 0 0 0-31.24 5 55.4 55.4 0 0 1 7.24 27 56 56 0 0 1-56 56 55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144zm284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400z"/></svg>&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+                </div>
+
+            
+
+
+            
+        </div>
+    </footer>
+
+
+        </div>
+        
+
+        
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css">
+<script>
+    if (typeof renderMathInElement === 'undefined') {
+        const getScript = (options) => {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.crossOrigin = 'anonymous';
+            Object.keys(options).forEach((key) => {
+                script[key] = options[key];
+            });
+            document.body.appendChild(script);
+        };
+        getScript({
+            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/katex.min.js',
+            onload: () => {
+                getScript({
+                    src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/mhchem.min.js',
+                    onload: () => {
+                        getScript({
+                            src: 'https:\/\/cdn.jsdelivr.net\/npm\/katex@0.13.0\/dist\/contrib\/auto-render.min.js',
+                            onload: () => {
+                                renderKaTex();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else {
+        renderKaTex();
+    }
+    function renderKaTex() {
+        renderMathInElement(
+            document.body,
+            {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\[", right: "\\]", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false}
+                ]
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
+
+
+
+    
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/ZhaoUncle/image@main/static/mouse-click.js"></script>
+<canvas width="1777" height="841" style="position: fixed; left: 0px; top: 0px; z-index: 2147483647; pointer-events: none;"></canvas>
+
+
+    </body>
+</html>
